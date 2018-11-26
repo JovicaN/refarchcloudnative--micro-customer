@@ -32,6 +32,7 @@ podTemplate(
                     REGISTRY=`cat /var/run/configs/registry-config/registry`
 
                     cd docker
+                    sudo chmod +x ./startup.sh
                     docker build -t \${REGISTRY}/\${NAMESPACE}/bluecompute-customer:${env.BUILD_NUMBER} .                    
                 """
             }
@@ -81,6 +82,8 @@ podTemplate(
 				cat key.pem
 				pwd
 				ls -l
+                cd cd /home/jenkins/workspace/Customer/docker
+                sudo chmod +x ./startup.sh
                 helm repo add bluecompute https://raw.githubusercontent.com/ibm-cloud-academy/icp-jenkins-helm-bluecompute/master/charts
                 helm install --tls -n bluecompute-customer --set image.repository=\${REGISTRY}/\${NAMESPACE}/bluecompute-customer --set image.tag=${env.BUILD_NUMBER} bluecompute/customer
                 """
